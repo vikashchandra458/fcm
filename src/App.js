@@ -86,19 +86,19 @@ const App = () => {
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <p>
+          <p style={{ color: "red" }}>
             Your Current Token :
           </p>
           <p style={{ marginTop: -20, width: "80%", wordWrap: "break-word" }}>
             {token}
           </p>
-          <p style={{ textAlign: "left", lineHeight: 0.5 }}>
+          <p style={{ textAlign: "left", lineHeight: 0.5, color: "green" }}>
             Your Notification :
           </p>
-          <div>
+          <div style={{ marginTop: -20, width: "80%", wordWrap: "break-word" }}>
             {allNotification.map((item, index) => (
               <div key={index} >
-                <p style={{ textAlign: "left", lineHeight: 0.5, width: "80%", wordWrap: "break-word" }}>({index + 1}) {item.title}  :  {item.body}</p>
+                <p style={{ textAlign: "left", }}>({index + 1}) {item.title}  :  {item.body}</p>
               </div>
             ))}
           </div>
