@@ -89,7 +89,7 @@ const App = () => {
           <p>
             Your Current Token :
           </p>
-          <p style={{ marginTop: -20, paddingLeft:"10%", paddingRight:"10%" }}>
+          <p style={{ marginTop: -20, width: "80%", wordWrap: "break-word" }}>
             {token}
           </p>
           <p style={{ textAlign: "left", lineHeight: 0.5 }}>
@@ -98,7 +98,7 @@ const App = () => {
           <div>
             {allNotification.map((item, index) => (
               <div key={index} >
-                <p style={{ textAlign: "left", lineHeight: 0.5 }}>({index + 1}) {item.title}  :  {item.body}</p>
+                <p style={{ textAlign: "left", lineHeight: 0.5, width: "80%", wordWrap: "break-word" }}>({index + 1}) {item.title}  :  {item.body}</p>
               </div>
             ))}
           </div>
