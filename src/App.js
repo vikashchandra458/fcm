@@ -7,6 +7,8 @@ import './App.css';
 
 const App = () => {
   const [notification, setNotification] = useState({ title: '', body: '' });
+  const [allNotification, setAllNotification] = useState([]);
+  const [token, setToken] = useState("");
   const notify = () => toast(<ToastDisplay />);
   function ToastDisplay() {
     return (
@@ -16,11 +18,23 @@ const App = () => {
       </div>
     );
   };
+  useEffect(() => {
+    if (allNotification.length > 0) {
+      const dataAsString = JSON.stringify(allNotification);
+      localStorage.setItem('myData', dataAsString);
+    } else {
+      const dataAsString = localStorage.getItem('myData');
+      if (dataAsString) {
+        setAllNotification(JSON.parse(dataAsString))
+      }
+    }
+  }, [notification])
 
   const requestForToken = () => {
     return getToken(messaging, { vapidKey: "BOE-MkGX6wlCDTGQibU5F5S7qwxoFVr3mAOf6gkAH6noQQf0g8tMMBSm5A7kf0ncPJdtXnlck1UTn0cxoLhEbI0" })
       .then((currentToken) => {
         if (currentToken) {
+          setToken(currentToken || 'No registration token available. Request permission to generate one.')
           console.log('current token for client: ', currentToken);
           // Perform any other neccessary action with the token
         } else {
@@ -51,6 +65,7 @@ const App = () => {
 
   onMessageListener()
     .then((payload) => {
+      setAllNotification(oldArray => [...oldArray, { title: payload?.notification?.title, body: payload?.notification?.body }]);
       setNotification({ title: payload?.notification?.title, body: payload?.notification?.body });
     })
     .catch((err) => console.log('failed: ', err));
@@ -72,16 +87,21 @@ const App = () => {
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <p>
-            Edit <code>src/App.js</code> and save to reload.
+            Your Current Token :
           </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
+          <p style={{ marginTop: -20 }}>
+            {token}
+          </p>
+          <p style={{ textAlign: "left", lineHeight: 0.5 }}>
+            Your Notification :
+          </p>
+          <div>
+            {allNotification.map((item, index) => (
+              <div key={index} >
+                <p style={{ textAlign: "left", lineHeight: 0.5 }}>({index + 1}) {item.title}  :  {item.body}</p>
+              </div>
+            ))}
+          </div>
         </header>
       </div>
     </>
