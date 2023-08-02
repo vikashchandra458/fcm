@@ -19,7 +19,7 @@ const App = () => {
     );
   };
   useEffect(() => {
-    if (allNotification.length > 0) {
+    if (allNotification?.length > 0) {
       const dataAsString = JSON.stringify(allNotification);
       localStorage.setItem('myData', dataAsString);
     } else {
@@ -28,7 +28,7 @@ const App = () => {
         setAllNotification(JSON.parse(dataAsString))
       }
     }
-  }, [notification])
+  }, [allNotification])
 
   const requestForToken = () => {
     return getToken(messaging, { vapidKey: "BOE-MkGX6wlCDTGQibU5F5S7qwxoFVr3mAOf6gkAH6noQQf0g8tMMBSm5A7kf0ncPJdtXnlck1UTn0cxoLhEbI0" })
