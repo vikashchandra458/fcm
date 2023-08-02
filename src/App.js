@@ -89,7 +89,7 @@ const App = () => {
           <p>
             Your Current Token :
           </p>
-          <p style={{ marginTop: -20 }}>
+          <p style={{ marginTop: -20, paddingLeft:"10%", paddingRight:"10%" }}>
             {token}
           </p>
           <p style={{ textAlign: "left", lineHeight: 0.5 }}>
