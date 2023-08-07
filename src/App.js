@@ -31,7 +31,7 @@ const App = () => {
   }, [allNotification])
 
   const requestForToken = () => {
-    return getToken(messaging, { vapidKey: "BOE-MkGX6wlCDTGQibU5F5S7qwxoFVr3mAOf6gkAH6noQQf0g8tMMBSm5A7kf0ncPJdtXnlck1UTn0cxoLhEbI0" })
+    return getToken(messaging, { vapidKey: "AAAAFbAiYtc:APA91bH0FEcEP0YgGjZkPtDxsM2RJJwEm6vCm2elxTbQ_z9GcyeB3Op0shXAz0-S2u8evo6pLpyxx5ETZKl96E9vT3RSliOBT4_8QL3ciqlgA8KqfVQIrJtT87EOf08LpYWR7CqpQYRn" })
       .then((currentToken) => {
         if (currentToken) {
           setToken(currentToken || 'No registration token available. Request permission to generate one.')
