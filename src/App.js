@@ -4,7 +4,6 @@ import { messaging } from "./firebase"
 import { getToken, onMessage } from 'firebase/messaging';
 import logo from './logo.svg';
 import './App.css';
-import ShareButton from './ShareButton';
 
 const App = () => {
   const [notification, setNotification] = useState({ title: '', body: '' });
@@ -14,6 +13,25 @@ const App = () => {
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     setSelectedFile(URL.createObjectURL(file));
+  };
+  const handleShare = async () => {
+    try {
+      console.log(selectedFile)
+      if (navigator.share && selectedFile) {
+        const imageBlob = await fetch(selectedFile).then(response => response.blob());
+        const image = new File([imageBlob], 'shared-image.png', { type: 'image/png' });
+
+        await navigator.share({
+          title: 'Share Image',
+          text: 'Check out this uploaded image!',
+          files: [image],
+        });
+      } else {
+        console.log('Web Share API not supported or no image selected.');
+      }
+    } catch (error) {
+      console.error('Error sharing:', error);
+    }
   };
 
   const notify = () => toast(<ToastDisplay />);
@@ -95,7 +113,9 @@ const App = () => {
           <div style={{ display: "flex", flexDirection: "column" }}>
             <input type="file" onChange={handleFileChange} />
             {selectedFile && <img src={selectedFile} alt="Uploaded" style={{ marginTop: 20, marginBottom: 20 }} />}
-            {selectedFile && <ShareButton file={selectedFile} />}
+            {selectedFile && <button onClick={handleShare}>
+              Share via Web Share API
+            </button> }
           </div>
           <img src={logo} className="App-logo" alt="logo" />
           <p style={{ color: "red" }}>
