@@ -4,11 +4,18 @@ import { messaging } from "./firebase"
 import { getToken, onMessage } from 'firebase/messaging';
 import logo from './logo.svg';
 import './App.css';
+import ShareButton from './ShareButton';
 
 const App = () => {
   const [notification, setNotification] = useState({ title: '', body: '' });
   const [allNotification, setAllNotification] = useState([]);
   const [token, setToken] = useState("");
+  const [selectedFile, setSelectedFile] = useState(null);
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    setSelectedFile(URL.createObjectURL(file));
+  };
+
   const notify = () => toast(<ToastDisplay />);
   function ToastDisplay() {
     return (
@@ -85,6 +92,11 @@ const App = () => {
       </Toaster>
       <div className="App">
         <header className="App-header">
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            <input type="file" onChange={handleFileChange} />
+            {selectedFile && <img src={selectedFile} alt="Uploaded" style={{ marginTop: 20, marginBottom: 20 }} />}
+            {selectedFile && <ShareButton file={selectedFile} />}
+          </div>
           <img src={logo} className="App-logo" alt="logo" />
           <p style={{ color: "red" }}>
             Your Current Token :
